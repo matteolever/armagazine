@@ -66,9 +66,7 @@ public class SceneBehaviour : MonoBehaviour {
 				}
 				else
 					if (touch.position.y < Screen.height - PALETTE_THRESHOLD) {
-						var prevSelectedObj = GetSelection ();
-						if (prevSelectedObj)
-							ClearSelection (prevSelectedObj);
+						TapOutside ();
 					}
 
 				break;
@@ -79,18 +77,20 @@ public class SceneBehaviour : MonoBehaviour {
 			if (obj)
 				ObjectTap (obj);
 			else if (Input.mousePosition.y < Screen.height - PALETTE_THRESHOLD) {
-				var prevSelectedObj = GetSelection ();
-				if (prevSelectedObj)
-					ClearSelection (prevSelectedObj);
+				TapOutside ();
 			}
 		}
 	}
 
 	private void ObjectTap(GameObject obj) {
-		if (IsSelected (obj))
-			ClearSelection (obj);
-		else
+		if (!IsSelected (obj))
 			SelectObject (obj);
+	}
+
+	private void TapOutside() {
+		var prevSelectedObj = GetSelection ();
+		if (prevSelectedObj)
+			ClearSelection (prevSelectedObj);
 	}
 
 	private void SelectObject(GameObject obj) {
