@@ -94,14 +94,14 @@ public class SceneBehaviour : MonoBehaviour {
 	}
 
 	private void SelectObject(GameObject obj) {
-		obj.tag = "SelectedFurniture";
+		obj.GetComponent<FurnitureBehaviour> ().Select ();
 
 		GameObject.Find ("ColorPalette").GetComponent<PaletteBehaviour> ().Show ();
 	}
 
 	private void ClearSelection(GameObject obj) {
-		obj.tag = "Untagged";
 		print ("Clear Selection");
+		obj.GetComponent<FurnitureBehaviour> ().Deselect ();
 
 		GameObject.Find ("ColorPalette").GetComponent<PaletteBehaviour> ().Hide ();
 		//var objects = GameObject.FindGameObjectsWithTag ("SelectedFurniture");
@@ -110,11 +110,16 @@ public class SceneBehaviour : MonoBehaviour {
 	}
 
 	private bool IsSelected(GameObject obj) {
-		return obj.tag == "SelectedFurniture";
+		return obj.GetComponent<FurnitureBehaviour> ().IsSelected ();
 	}
 
 	private GameObject GetSelection() {
-		return GameObject.FindGameObjectWithTag ("SelectedFurniture");
+		var objects = GameObject.FindGameObjectsWithTag ("FurnitureTag");
+		foreach (var obj in objects) {
+			if (IsSelected (obj))
+				return obj;
+		}
+		return null;
 	}
 
 	public void ChangeColor (string color) {
