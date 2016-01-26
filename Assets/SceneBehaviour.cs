@@ -6,7 +6,7 @@ public class SceneBehaviour : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		selectedObj = GameObject.Find ("Armchair");
+		//selectedObj = ;
 	}
 	
 	// Update is called once per frame
@@ -34,7 +34,9 @@ public class SceneBehaviour : MonoBehaviour {
 			break;
 		}
 
-		if (selectedObj != null)
-			selectedObj.GetComponent<Renderer>().material.color = c;
+		//if (selectedObj != null)
+		GameObject obj = GameObject.Find ("Armchair");
+		if (obj)
+			obj.GetComponent<Renderer>().material.color = c;
 	}
 }

@@ -28,8 +28,8 @@ public class PaletteBehaviour : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		transform.Translate (new Vector2 (0, Screen.height / 2 - 30));
-		float zoom = 0.6F;
+		transform.Translate (new Vector2 (0, Screen.height / 2 - 100));
+		float zoom = 2F;
 		transform.localScale += new Vector3 (zoom, zoom, 0);
 	}
 	
