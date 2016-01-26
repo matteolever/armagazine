@@ -5,8 +5,9 @@ public class SceneBehaviour : MonoBehaviour {
 	public float minSwipeDistY;
 	public float minSwipeDistX;
 	private Vector2 startPos;
+	private GameObject manipulatedObj;
 
-	int SWIPE_THRESHOLD = 0;
+	int SWIPE_THRESHOLD = 50;
 
 	// Use this for initialization
 	void Start () {
@@ -29,39 +30,40 @@ public class SceneBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.touchCount > 0) {
-			GameObject obj = DetectTarget();
+			Touch touch = Input.touches [0];
+			switch (touch.phase) {
 
-			if (obj) {
-				Touch touch = Input.touches [0];
-				switch (touch.phase) {
+			case TouchPhase.Began:
+				manipulatedObj = DetectTarget();
+				startPos = touch.position;
+				break;
+			case TouchPhase.Ended:
+				float swipeValue;
+				float swipeDistVertical = (new Vector3 (0, touch.position.y, 0) - new Vector3 (0, startPos.y, 0)).magnitude;
+				if (swipeDistVertical > minSwipeDistY) {
+					swipeValue = Mathf.Sign (touch.position.y - startPos.y);
 
-				case TouchPhase.Began:
-					startPos = touch.position;
-					break;
-				case TouchPhase.Ended:
-					float swipeValue;
-					float swipeDistVertical = (new Vector3 (0, touch.position.y, 0) - new Vector3 (0, startPos.y, 0)).magnitude;
-					if (swipeDistVertical > minSwipeDistY) {
-						swipeValue = Mathf.Sign (touch.position.y - startPos.y);
-
-						if (swipeValue > 0) { } // up swipe
-						else if (swipeValue < 0) { } //down swipe
-					}
-
-					float swipeDistHorizontal = (new Vector3 (touch.position.x, 0, 0) - new Vector3 (startPos.x, 0, 0)).magnitude;
-
-					swipeValue = Mathf.Sign (touch.position.x - startPos.x);
-
-					if (swipeValue > SWIPE_THRESHOLD) { //right swipe
-						obj.transform.Rotate (new Vector3 (0, 270, 0));
-					} else if (swipeValue < -SWIPE_THRESHOLD) { //left swipe
-						obj.transform.Rotate (new Vector3 (0, 90, 0));
-					} else {
-						ObjectTap (obj);
-					}
-
-					break;
+					if (swipeValue > 0) {
+					} // up swipe
+					else if (swipeValue < 0) {
+					} //down swipe
 				}
+
+				float swipeDistHorizontal = (new Vector3 (touch.position.x, 0, 0) - new Vector3 (startPos.x, 0, 0)).magnitude;
+
+				swipeValue = (touch.position.x - startPos.x);
+
+				if (manipulatedObj) {
+					if (swipeValue > SWIPE_THRESHOLD) { //right swipe
+						manipulatedObj.transform.Rotate (new Vector3 (0, 270, 0));
+					} else if (swipeValue < -SWIPE_THRESHOLD) { //left swipe
+						manipulatedObj.transform.Rotate (new Vector3 (0, 90, 0));
+					} else {
+						ObjectTap (manipulatedObj);
+					}
+				}
+
+				break;
 			}
 		}
 		else if (Input.GetMouseButtonDown(0)) {
@@ -80,11 +82,15 @@ public class SceneBehaviour : MonoBehaviour {
 
 	private void SelectObject(GameObject obj) {
 		obj.tag = "SelectedFurniture";
+
+		GameObject.Find ("ColorPalette").GetComponent<PaletteBehaviour> ().Show ();
 	}
 
 	private void ClearSelection(GameObject obj) {
 		obj.tag = "Untagged";
 		print ("Clear Selection");
+
+		GameObject.Find ("ColorPalette").GetComponent<PaletteBehaviour> ().Hide ();
 		//var objects = GameObject.FindGameObjectsWithTag ("SelectedFurniture");
 		//foreach (var obj in objects)
 		//	obj.tag = "Untagged";

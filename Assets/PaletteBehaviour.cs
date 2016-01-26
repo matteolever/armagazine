@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class PaletteBehaviour : MonoBehaviour {
 	//private Color[] colors = {Color.black, Color.white, Color.gray, Color.yellow, Color.red, Color.blue};
 	//private List<Button> colorButtons = new List<Button>();
+	bool hidden = true;
 
 	void OnGUI() {
 		/*
@@ -28,9 +29,23 @@ public class PaletteBehaviour : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		transform.Translate (new Vector2 (0, Screen.height / 2 - 100));
+		transform.Translate (new Vector2 (0, Screen.height / 2 + 60));
 		float zoom = 2F;
 		transform.localScale += new Vector3 (zoom, zoom, 0);
+	}
+
+	public void Show() {
+		if (hidden) {
+			transform.Translate (new Vector2 (0, - 160));
+			hidden = false;
+		}
+	}
+
+	public void Hide() {
+		if (!hidden) {
+			transform.Translate (new Vector2 (0, 160));
+			hidden = true;
+		}
 	}
 	
 	// Update is called once per frame
