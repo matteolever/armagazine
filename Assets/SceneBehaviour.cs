@@ -2,34 +2,47 @@
 using System.Collections;
 
 public class SceneBehaviour : MonoBehaviour {
-	private static GameObject selectedObj;
+	private GameObject selectedObj;
+	//Camera camera;
 
 	// Use this for initialization
 	void Start () {
 		//selectedObj = ;
+		//camera = 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		float turnSpeed = 45.0f;
+		if (Input.GetMouseButtonDown(0)) {
+			RaycastHit hit;
+			Camera camera = GameObject.Find ("Camera").GetComponent<Camera>();
+			Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+			if (Physics.Raycast (ray, out hit)) {
+				if (hit.transform != null) {
+					Debug.Log ("Hit " + hit.transform.gameObject.name);
+					//hit.transform.gameObject.transform.Rotate (Vector3.up * turnSpeed);
+					SelectObject (hit.transform.gameObject);
+				}
+			} else {
+				ClearSelection ();
+			}
+		}
 	}
 
 	public void CheckDisappearingObject(GameObject obj) {
 		if (obj == selectedObj)
-			DeselectCurrentObject ();
-	}
-
-	public void DeselectCurrentObject() {
-		if (selectedObj) {
-			selectedObj = null;
-		}
+			ClearSelection ();
 	}
 
 	public void SelectObject(GameObject obj) {
-		print ("SelectObject!!!!!!!!!!!");
-		//DeselectCurrentObject ();
+		print ("Select object " + obj.name);
 		selectedObj = obj;
-		print (selectedObj);
+	}
+
+	public void ClearSelection() {
+		print ("Clear Selection");
+		selectedObj = null;
 	}
 
 	public void ChangeColor (string color) {
@@ -52,7 +65,8 @@ public class SceneBehaviour : MonoBehaviour {
 			break;
 		}
 
-		selectedObj = GameObject.Find ("ArmchairMarker/Container/Furniture");
+		print ("Change color: " + selectedObj);
+		print (selectedObj);
 		if (selectedObj != null)
 			selectedObj.GetComponent<Renderer>().material.color = c;
 	}
