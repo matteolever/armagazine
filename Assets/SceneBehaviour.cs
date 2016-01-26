@@ -2,18 +2,13 @@
 using System.Collections;
 
 public class SceneBehaviour : MonoBehaviour {
-	private GameObject selectedObj;
-	//Camera camera;
 
 	// Use this for initialization
 	void Start () {
-		//selectedObj = ;
-		//camera = 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		float turnSpeed = 45.0f;
 		if (Input.GetMouseButtonDown(0)) {
 			RaycastHit hit;
 			Camera camera = GameObject.Find ("Camera").GetComponent<Camera>();
@@ -21,28 +16,33 @@ public class SceneBehaviour : MonoBehaviour {
 			if (Physics.Raycast (ray, out hit)) {
 				if (hit.transform != null) {
 					Debug.Log ("Hit " + hit.transform.gameObject.name);
-					//hit.transform.gameObject.transform.Rotate (Vector3.up * turnSpeed);
-					SelectObject (hit.transform.gameObject);
+					if (IsSelected (hit.transform.gameObject))
+						ClearSelection (hit.transform.gameObject);
+					else
+						SelectObject (hit.transform.gameObject);
 				}
-			} else {
-				ClearSelection ();
 			}
 		}
 	}
 
-	public void CheckDisappearingObject(GameObject obj) {
-		if (obj == selectedObj)
-			ClearSelection ();
+	private void SelectObject(GameObject obj) {
+		obj.tag = "SelectedFurniture";
 	}
 
-	public void SelectObject(GameObject obj) {
-		print ("Select object " + obj.name);
-		selectedObj = obj;
-	}
-
-	public void ClearSelection() {
+	private void ClearSelection(GameObject obj) {
+		obj.tag = "Untagged";
 		print ("Clear Selection");
-		selectedObj = null;
+		//var objects = GameObject.FindGameObjectsWithTag ("SelectedFurniture");
+		//foreach (var obj in objects)
+		//	obj.tag = "Untagged";
+	}
+
+	private bool IsSelected(GameObject obj) {
+		return obj.tag == "SelectedFurniture";
+	}
+
+	private GameObject GetSelection() {
+		return GameObject.FindGameObjectWithTag ("SelectedFurniture");
 	}
 
 	public void ChangeColor (string color) {
@@ -65,10 +65,11 @@ public class SceneBehaviour : MonoBehaviour {
 			break;
 		}
 
-		print ("Change color: " + selectedObj);
-		print (selectedObj);
-		if (selectedObj != null)
-			selectedObj.GetComponent<Renderer>().material.color = c;
+		GameObject selectedObj = GetSelection();
+		if (selectedObj != null) {
+			print ("Change color");
+			selectedObj.GetComponent<Renderer> ().material.color = c;
+		}
 	}
 
 	public void OnMarkerLost(ARMarker marker) {
