@@ -1200,9 +1200,10 @@ GameObject:
   m_Component:
   - 224: {fileID: 1879124210}
   - 114: {fileID: 1879124211}
+  - 61: {fileID: 1879124212}
   m_Layer: 10
   m_Name: ColorPalette
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1241,6 +1242,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de7c34db28a194917a3a1d686cf6a433, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &1879124212
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1879124209}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 290, y: 40}
 --- !u!1 &1905201854
 GameObject:
   m_ObjectHideFlags: 0
@@ -1554,6 +1569,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a08f0a4958ad4b5d8ae7813d1d87c10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minSwipeDistY: 0
+  minSwipeDistX: 0
 --- !u!1 &2087282706
 GameObject:
   m_ObjectHideFlags: 0

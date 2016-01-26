@@ -8,6 +8,7 @@ public class SceneBehaviour : MonoBehaviour {
 	private GameObject manipulatedObj;
 
 	int SWIPE_THRESHOLD = 50;
+	int PALETTE_THRESHOLD = 160;
 
 	// Use this for initialization
 	void Start () {
@@ -34,8 +35,9 @@ public class SceneBehaviour : MonoBehaviour {
 			switch (touch.phase) {
 
 			case TouchPhase.Began:
-				manipulatedObj = DetectTarget();
+				manipulatedObj = DetectTarget ();
 				startPos = touch.position;
+
 				break;
 			case TouchPhase.Ended:
 				float swipeValue;
@@ -62,6 +64,12 @@ public class SceneBehaviour : MonoBehaviour {
 						ObjectTap (manipulatedObj);
 					}
 				}
+				else
+					if (touch.position.y < Screen.height - PALETTE_THRESHOLD) {
+						var prevSelectedObj = GetSelection ();
+						if (prevSelectedObj)
+							ClearSelection (prevSelectedObj);
+					}
 
 				break;
 			}
@@ -70,6 +78,11 @@ public class SceneBehaviour : MonoBehaviour {
 			GameObject obj = DetectTarget();
 			if (obj)
 				ObjectTap (obj);
+			else if (Input.mousePosition.y < Screen.height - PALETTE_THRESHOLD) {
+				var prevSelectedObj = GetSelection ();
+				if (prevSelectedObj)
+					ClearSelection (prevSelectedObj);
+			}
 		}
 	}
 
