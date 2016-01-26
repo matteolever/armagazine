@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class SceneBehaviour : MonoBehaviour {
-	private GameObject selectedObj = null;
+	private static GameObject selectedObj;
 
 	// Use this for initialization
 	void Start () {
@@ -12,6 +12,24 @@ public class SceneBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	public void CheckDisappearingObject(GameObject obj) {
+		if (obj == selectedObj)
+			DeselectCurrentObject ();
+	}
+
+	public void DeselectCurrentObject() {
+		if (selectedObj) {
+			selectedObj = null;
+		}
+	}
+
+	public void SelectObject(GameObject obj) {
+		print ("SelectObject!!!!!!!!!!!");
+		//DeselectCurrentObject ();
+		selectedObj = obj;
+		print (selectedObj);
 	}
 
 	public void ChangeColor (string color) {
@@ -34,9 +52,16 @@ public class SceneBehaviour : MonoBehaviour {
 			break;
 		}
 
-		//if (selectedObj != null)
-		GameObject obj = GameObject.Find ("Armchair");
-		if (obj)
-			obj.GetComponent<Renderer>().material.color = c;
+		selectedObj = GameObject.Find ("ArmchairMarker/Container/Furniture");
+		if (selectedObj != null)
+			selectedObj.GetComponent<Renderer>().material.color = c;
+	}
+
+	public void OnMarkerLost(ARMarker marker) {
+		//GameObject obj = GameObject.Find (marker.name + "/Container/Furniture");
+		//CheckDisappearingObject(obj);
+	}
+
+	public void OnMarkerFound(ARMarker marker) {
 	}
 }
