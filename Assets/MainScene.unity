@@ -157,7 +157,7 @@ GameObject:
   - 114: {fileID: 42475134}
   m_Layer: 9
   m_Name: ArmchairMarker
-  m_TagString: Untagged
+  m_TagString: AllMarkerTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1200,7 +1200,6 @@ GameObject:
   m_Component:
   - 224: {fileID: 1879124210}
   - 114: {fileID: 1879124211}
-  - 61: {fileID: 1879124212}
   m_Layer: 10
   m_Name: ColorPalette
   m_TagString: Floor
@@ -1242,20 +1241,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de7c34db28a194917a3a1d686cf6a433, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!61 &1879124212
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1879124209}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Size: {x: 290, y: 40}
 --- !u!1 &1905201854
 GameObject:
   m_ObjectHideFlags: 0
@@ -1392,6 +1377,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 839.9978, y: 824.35913, z: 865.6602}
   m_Center: {x: -46.571354, y: 415.0767, z: -158.63094}
+--- !u!114 &1938296154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1938296149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a4f856626d64ea485a2b5a6e927169, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2007957323
 GameObject:
   m_ObjectHideFlags: 0

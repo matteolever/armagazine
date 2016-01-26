@@ -80,6 +80,26 @@ public class SceneBehaviour : MonoBehaviour {
 				TapOutside ();
 			}
 		}
+
+		DetectCloseObject ();
+	}
+
+	private void DetectCloseObject() {
+		float maxDist = 1000;
+		GameObject closestObj = null;
+
+		Camera camera = GameObject.Find ("Camera").GetComponent<Camera>();
+		var cameraPosition = camera.transform.position;
+
+		foreach (var obj in GameObject.FindGameObjectsWithTag("AllMarkerTag")) {
+			var marker = obj.GetComponent<ARTrackedObject> ();
+			var position = marker.transform.position;
+			float dist = Vector3.Distance(cameraPosition, position);
+			if (dist < maxDist) {
+				maxDist = dist;
+				closestObj = obj;
+			}
+		}
 	}
 
 	private void ObjectTap(GameObject obj) {
@@ -155,5 +175,6 @@ public class SceneBehaviour : MonoBehaviour {
 	}
 
 	public void OnMarkerFound(ARMarker marker) {
+		//marker.
 	}
 }
