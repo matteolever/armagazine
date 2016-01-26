@@ -2,27 +2,80 @@
 using System.Collections;
 
 public class SceneBehaviour : MonoBehaviour {
+	public float minSwipeDistY;
+	public float minSwipeDistX;
+	private Vector2 startPos;
+
+	int SWIPE_THRESHOLD = 0;
 
 	// Use this for initialization
 	void Start () {
 	}
+
+	private GameObject DetectTarget() {
+		GameObject target = null;
+
+		RaycastHit hit;
+		Camera camera = GameObject.Find ("Camera").GetComponent<Camera>();
+		Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+		if (Physics.Raycast (ray, out hit)) {
+			Debug.Log ("Hit " + hit.transform.gameObject.name);
+			target = hit.transform.gameObject;
+		}
+
+		return target;
+	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButtonDown(0)) {
-			RaycastHit hit;
-			Camera camera = GameObject.Find ("Camera").GetComponent<Camera>();
-			Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast (ray, out hit)) {
-				if (hit.transform != null) {
-					Debug.Log ("Hit " + hit.transform.gameObject.name);
-					if (IsSelected (hit.transform.gameObject))
-						ClearSelection (hit.transform.gameObject);
-					else
-						SelectObject (hit.transform.gameObject);
+		if (Input.touchCount > 0) {
+			GameObject obj = DetectTarget();
+
+			if (obj) {
+				Touch touch = Input.touches [0];
+				switch (touch.phase) {
+
+				case TouchPhase.Began:
+					startPos = touch.position;
+					break;
+				case TouchPhase.Ended:
+					float swipeValue;
+					float swipeDistVertical = (new Vector3 (0, touch.position.y, 0) - new Vector3 (0, startPos.y, 0)).magnitude;
+					if (swipeDistVertical > minSwipeDistY) {
+						swipeValue = Mathf.Sign (touch.position.y - startPos.y);
+
+						if (swipeValue > 0) { } // up swipe
+						else if (swipeValue < 0) { } //down swipe
+					}
+
+					float swipeDistHorizontal = (new Vector3 (touch.position.x, 0, 0) - new Vector3 (startPos.x, 0, 0)).magnitude;
+
+					swipeValue = Mathf.Sign (touch.position.x - startPos.x);
+
+					if (swipeValue > SWIPE_THRESHOLD) { //right swipe
+						obj.transform.Rotate (new Vector3 (0, 270, 0));
+					} else if (swipeValue < -SWIPE_THRESHOLD) { //left swipe
+						obj.transform.Rotate (new Vector3 (0, 90, 0));
+					} else {
+						ObjectTap (obj);
+					}
+
+					break;
 				}
 			}
 		}
+		else if (Input.GetMouseButtonDown(0)) {
+			GameObject obj = DetectTarget();
+			if (obj)
+				ObjectTap (obj);
+		}
+	}
+
+	private void ObjectTap(GameObject obj) {
+		if (IsSelected (obj))
+			ClearSelection (obj);
+		else
+			SelectObject (obj);
 	}
 
 	private void SelectObject(GameObject obj) {
