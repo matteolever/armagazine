@@ -108,16 +108,16 @@ public class SceneBehaviour : MonoBehaviour {
 				}
 			}
 		}
-		print (minDist);
+
 		if (closestObj && minDist < DIST_THRESHOLD) {
 			var furniture = closestObj.transform.Find ("Container").transform.Find ("Furniture");
-			string objName = furniture.GetComponent<FurnitureBehaviour> ().Name;
-			string objPrice = furniture.GetComponent<FurnitureBehaviour> ().Price;
-			GameObject.Find ("NameText").GetComponent<Text> ().text = objName;
-			GameObject.Find ("PriceText").GetComponent<Text> ().text = objPrice;
+			Sprite objName = furniture.GetComponent<FurnitureBehaviour> ().Name;
+			Sprite objPrice = furniture.GetComponent<FurnitureBehaviour> ().Price;
+			GameObject.Find ("NameText").GetComponent<Image> ().sprite = objName;
+			GameObject.Find ("PriceText").GetComponent<Image> ().sprite = objPrice;
 		} else {
-			GameObject.Find ("NameText").GetComponent<Text> ().text = "";
-			GameObject.Find ("PriceText").GetComponent<Text> ().text = "";
+			//GameObject.Find ("NameText").GetComponent<Image> ().text = "1";
+			//GameObject.Find ("PriceText").GetComponent<Image> ().text = "2";
 		}
 	}
 
