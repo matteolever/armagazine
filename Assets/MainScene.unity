@@ -293,8 +293,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19a4f856626d64ea485a2b5a6e927169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: {fileID: 0}
-  Price: {fileID: 0}
+  Name: {fileID: 2800000, guid: e369bb275287c474a8f7fac6bca7f19f, type: 3}
+  Price: {fileID: 2800000, guid: d7dce8be411324a61a4c592da5254d11, type: 3}
 --- !u!1 &165750877
 GameObject:
   m_ObjectHideFlags: 0
@@ -1828,7 +1828,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 500, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1295127551
 MonoBehaviour:
@@ -2283,7 +2283,7 @@ MonoBehaviour:
   videoConfigurationWindows0: -showDialog -flipV
   videoConfigurationMacOSX0: -width=640 -height=480
   videoConfigurationiOS0: 
-  videoConfigurationAndroid0: -width=1080 -height=1920
+  videoConfigurationAndroid0: 
   videoConfigurationWindowsStore0: -device=WinMC -format=BGRA -position=rear
   videoConfigurationLinux0: 
   BackgroundLayer0: 8
@@ -4611,8 +4611,8 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1
-    height: 1
+    width: 192
+    height: 108
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60

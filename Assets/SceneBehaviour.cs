@@ -13,7 +13,7 @@ public class SceneBehaviour : MonoBehaviour {
 
 	int SWIPE_THRESHOLD = 50;
 	int PALETTE_THRESHOLD = 160;
-	float DIST_THRESHOLD = 0.4F;
+	float DIST_THRESHOLD = 0.25F;
 
 	// Use this for initialization
 	void Start () {
@@ -115,24 +115,30 @@ public class SceneBehaviour : MonoBehaviour {
 			Texture objPrice = furniture.GetComponent<FurnitureBehaviour> ().Price;
 			GameObject.Find ("NameImage").GetComponent<RawImage> ().texture = objName;
 			GameObject.Find ("PriceImage").GetComponent<RawImage> ().texture = objPrice;
+			GameObject.Find ("DescObject").GetComponent<DescriptionBehaviour> ().Show ();
 		} else {
-			//GameObject.Find ("NameText").GetComponent<Image> ().text = "1";
-			//GameObject.Find ("PriceText").GetComponent<Image> ().text = "2";
+			GameObject.Find ("DescObject").GetComponent<DescriptionBehaviour> ().Hide ();
 		}
 	}
 
 	private void ObjectTap(GameObject obj) {
+		print ("Tap object!");
 		if (!IsSelected (obj))
 			SelectObject (obj);
 	}
 
 	private void TapOutside() {
+		print ("Tap outside");
 		var prevSelectedObj = GetSelection ();
 		if (prevSelectedObj)
 			ClearSelection (prevSelectedObj);
 	}
 
 	private void SelectObject(GameObject obj) {
+		var prevSelectedObj = GetSelection ();
+		if (prevSelectedObj)
+			ClearSelection (prevSelectedObj);
+			
 		obj.GetComponent<FurnitureBehaviour> ().Select ();
 
 		GameObject.Find ("ColorPalette").GetComponent<PaletteBehaviour> ().Show ();

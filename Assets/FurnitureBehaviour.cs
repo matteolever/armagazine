@@ -32,7 +32,7 @@ public class FurnitureBehaviour : MonoBehaviour {
 	public void Deselect() {
 		if (selected) {
 			selected = false;
-			GameObject.Find ("Selection").GetComponent<Renderer> ().material.color = transp;
+			transform.Find ("Selection").GetComponent<Renderer> ().material.color = transp;
 		}
 	}
 
