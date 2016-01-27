@@ -62,9 +62,9 @@ public class SceneBehaviour : MonoBehaviour {
 
 				if (manipulatedObj) {
 					if (swipeValue > SWIPE_THRESHOLD) { //right swipe
-						manipulatedObj.transform.Rotate (new Vector3 (0, 270, 0));
+						RotateObject(manipulatedObj, 270);
 					} else if (swipeValue < -SWIPE_THRESHOLD) { //left swipe
-						manipulatedObj.transform.Rotate (new Vector3 (0, 90, 0));
+						RotateObject(manipulatedObj, 90);
 					} else {
 						ObjectTap (manipulatedObj);
 					}
@@ -87,6 +87,10 @@ public class SceneBehaviour : MonoBehaviour {
 		}
 
 		DetectCloseObject ();
+	}
+
+	private void RotateObject(GameObject obj, int angle) {
+		obj.transform.parent.Rotate (new Vector3 (0, angle, 0));
 	}
 
 	private void DetectCloseObject() {
