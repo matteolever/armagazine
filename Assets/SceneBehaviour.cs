@@ -111,10 +111,10 @@ public class SceneBehaviour : MonoBehaviour {
 
 		if (closestObj && minDist < DIST_THRESHOLD) {
 			var furniture = closestObj.transform.Find ("Container").transform.Find ("Furniture");
-			Sprite objName = furniture.GetComponent<FurnitureBehaviour> ().Name;
-			Sprite objPrice = furniture.GetComponent<FurnitureBehaviour> ().Price;
-			//GameObject.Find ("NameText").GetComponent<Image> ().sprite = objName;
-			//GameObject.Find ("PriceText").GetComponent<Image> ().sprite = objPrice;
+			Texture objName = furniture.GetComponent<FurnitureBehaviour> ().Name;
+			Texture objPrice = furniture.GetComponent<FurnitureBehaviour> ().Price;
+			GameObject.Find ("NameImage").GetComponent<RawImage> ().texture = objName;
+			GameObject.Find ("PriceImage").GetComponent<RawImage> ().texture = objPrice;
 		} else {
 			//GameObject.Find ("NameText").GetComponent<Image> ().text = "1";
 			//GameObject.Find ("PriceText").GetComponent<Image> ().text = "2";

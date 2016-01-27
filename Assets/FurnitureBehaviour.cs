@@ -5,10 +5,10 @@ public class FurnitureBehaviour : MonoBehaviour {
 	private bool selected = false;
 
 	[SerializeField]
-	public Sprite Name;
+	public Texture Name;
 
 	[SerializeField]
-	public Sprite Price;
+	public Texture Price;
 
 	Color vis = new Color (255, 255, 255, 255);
 	Color transp = new Color (255, 255, 255, 0);
