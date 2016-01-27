@@ -4,8 +4,11 @@ using System.Collections;
 public class FurnitureBehaviour : MonoBehaviour {
 	private bool selected = false;
 
-	public string Name { get; set; }
-	public string Price { get; set; }
+	[SerializeField]
+	public string Name;
+
+	[SerializeField]
+	public string Price;
 
 	Color vis = new Color (255, 255, 255, 255);
 	Color transp = new Color (255, 255, 255, 0);

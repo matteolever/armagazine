@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class SceneBehaviour : MonoBehaviour {
 	public float minSwipeDistY;
@@ -7,8 +9,11 @@ public class SceneBehaviour : MonoBehaviour {
 	private Vector2 startPos;
 	private GameObject manipulatedObj;
 
+	private List<ARMarker> visibleMarkers = new List<ARMarker> (); 
+
 	int SWIPE_THRESHOLD = 50;
 	int PALETTE_THRESHOLD = 160;
+	float DIST_THRESHOLD = 0.4F;
 
 	// Use this for initialization
 	void Start () {
@@ -85,20 +90,34 @@ public class SceneBehaviour : MonoBehaviour {
 	}
 
 	private void DetectCloseObject() {
-		float maxDist = 1000;
+		float minDist = 1000;
 		GameObject closestObj = null;
 
 		Camera camera = GameObject.Find ("Camera").GetComponent<Camera>();
 		var cameraPosition = camera.transform.position;
 
 		foreach (var obj in GameObject.FindGameObjectsWithTag("AllMarkerTag")) {
-			var marker = obj.GetComponent<ARTrackedObject> ();
-			var position = marker.transform.position;
-			float dist = Vector3.Distance(cameraPosition, position);
-			if (dist < maxDist) {
-				maxDist = dist;
-				closestObj = obj;
+			if (visibleMarkers.Contains (obj.GetComponent<ARTrackedObject>().GetMarker ())) {
+
+				var marker = obj.GetComponent<ARTrackedObject> ();
+				var position = marker.transform.position;
+				float dist = Vector3.Distance (cameraPosition, position);
+				if (dist < minDist) {
+					minDist = dist;
+					closestObj = obj;
+				}
 			}
+		}
+		print (minDist);
+		if (closestObj && minDist < DIST_THRESHOLD) {
+			var furniture = closestObj.transform.Find ("Container").transform.Find ("Furniture");
+			string objName = furniture.GetComponent<FurnitureBehaviour> ().Name;
+			string objPrice = furniture.GetComponent<FurnitureBehaviour> ().Price;
+			GameObject.Find ("NameText").GetComponent<Text> ().text = objName;
+			GameObject.Find ("PriceText").GetComponent<Text> ().text = objPrice;
+		} else {
+			GameObject.Find ("NameText").GetComponent<Text> ().text = "";
+			GameObject.Find ("PriceText").GetComponent<Text> ().text = "";
 		}
 	}
 
@@ -170,11 +189,12 @@ public class SceneBehaviour : MonoBehaviour {
 	}
 
 	public void OnMarkerLost(ARMarker marker) {
+		visibleMarkers.Remove (marker);
 		//GameObject obj = GameObject.Find (marker.name + "/Container/Furniture");
 		//CheckDisappearingObject(obj);
 	}
 
 	public void OnMarkerFound(ARMarker marker) {
-		//marker.
+		visibleMarkers.Add (marker);
 	}
 }
