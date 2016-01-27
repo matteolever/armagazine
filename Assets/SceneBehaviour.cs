@@ -113,8 +113,8 @@ public class SceneBehaviour : MonoBehaviour {
 			var furniture = closestObj.transform.Find ("Container").transform.Find ("Furniture");
 			Sprite objName = furniture.GetComponent<FurnitureBehaviour> ().Name;
 			Sprite objPrice = furniture.GetComponent<FurnitureBehaviour> ().Price;
-			GameObject.Find ("NameText").GetComponent<Image> ().sprite = objName;
-			GameObject.Find ("PriceText").GetComponent<Image> ().sprite = objPrice;
+			//GameObject.Find ("NameText").GetComponent<Image> ().sprite = objName;
+			//GameObject.Find ("PriceText").GetComponent<Image> ().sprite = objPrice;
 		} else {
 			//GameObject.Find ("NameText").GetComponent<Image> ().text = "1";
 			//GameObject.Find ("PriceText").GetComponent<Image> ().text = "2";
@@ -162,29 +162,28 @@ public class SceneBehaviour : MonoBehaviour {
 	}
 
 	public void ChangeColor (string color) {
-		Color c = Color.gray;
+		Color c = new Color(135/256F, 133/256F, 118/256F);
 		switch (color) {
 		case "white":
-			c = Color.white;
+			c = new Color(236/256F, 231/256F, 210/256F);
 			break;
 		case "black":
-			c = Color.black;
+			c = new Color(41/256F, 46/256F, 60/256F);
 			break;
 		case "red":
-			c = Color.red;
+			c = new Color(132/256F, 51/256F, 51/256F);
 			break;
 		case "yellow":
-			c = Color.yellow;
+			c = new Color(210/256F, 212/256F, 106/256F);
 			break;
 		case "blue":
-			c = Color.blue;
+			c = new Color(56/256F, 111/256F, 176/256F);
 			break;
 		}
 
 		GameObject selectedObj = GetSelection();
 		if (selectedObj != null) {
-			print ("Change color");
-			selectedObj.GetComponent<Renderer> ().material.color = c;
+			selectedObj.GetComponent<FurnitureBehaviour> ().ChangeColor(c);
 		}
 	}
 

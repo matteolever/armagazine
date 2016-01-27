@@ -39,4 +39,15 @@ public class FurnitureBehaviour : MonoBehaviour {
 	public bool IsSelected() {
 		return selected;
 	}
+
+	public void ChangeColor(Color c) {
+		if (transform.childCount == 1) {
+			GetComponent<Renderer> ().material.color = c;
+		} else {
+			for (int i = 0; i < transform.childCount; i++) 
+				if (transform.GetChild(i).name != "Selection") {
+					transform.GetChild(i).GetComponent<Renderer> ().material.color = c;
+				}
+		}
+	}
 }
